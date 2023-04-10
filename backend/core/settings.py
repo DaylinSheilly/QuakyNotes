@@ -2,8 +2,8 @@ from pathlib import Path
 import os
 import environ
 
-env = environ.Env()
-environ.Env.read_env()
+#env = environ.Env()
+#environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,7 +18,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -33,7 +33,11 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-
+    'core',
+    'etiquetas',
+    'notas',
+    'recordatorios',
+    'usuarios'
 ]
 
 THIRD_PARTY_APPS = [
@@ -100,8 +104,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'quakynotes_db',
+        'USER': 'quaky_root',
+        'PASSWORD': 'quakyNotes',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -163,17 +171,18 @@ REST_FRAMEWORK = {
     ],
 }
 
-CORS_ORIGIN_WHITELIST = env.list('CORS_ORIGIN_WHITELIST_DEV')
-CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS_DEV')
+#CORS_ORIGIN_WHITELIST = #env.list('CORS_ORIGIN_WHITELIST_DEV')
+#CSRF_TRUSTED_ORIGINS = #env.list('CSRF_TRUSTED_ORIGINS_DEV')
+CORS_ALLOW_ALL_ORIGINS = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-if not DEBUG:
-    ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEPLOY')
-    CORS_ORIGIN_WHITELIST = env.list('CORS_ORIGIN_WHITELIST_DEPLOY')
-    CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS_DEPLOY')
+# if not DEBUG:
+#     ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEPLOY')
+#     CORS_ORIGIN_WHITELIST = env.list('CORS_ORIGIN_WHITELIST_DEPLOY')
+#     CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS_DEPLOY')
 
-    DATABASES = {
-    'default': env.db("DATABASE_URL") 
-    }
-    DATABASES["default"]["ATOMIC_REQUESTS"] = True
+#     DATABASES = {
+#     'default': env.db("DATABASE_URL") 
+#     }
+#     DATABASES["default"]["ATOMIC_REQUESTS"] = True
