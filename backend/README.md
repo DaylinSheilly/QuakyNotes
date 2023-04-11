@@ -1,12 +1,22 @@
 # Setting up the virtual enviroment
 
+Install python3.10 venv
+
 ```
+apt install python3.10-venv
+```
+
+Create the virtual enviroment
+
+```
+cd backend
 python3.10 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
 <br>
 exit virtual enviroment
+
 ```
 deactivate
 ```
@@ -19,13 +29,13 @@ Creating the DB
 $ sudo -u postgres psql
 ```
 ```
-postgres=# CREATE DATABASE quakynotes_db;
-postgres=# CREATE USER quaky_root WITH PASSWORD 'quakyNotes';
+CREATE DATABASE quakynotes_db;
+CREATE USER quaky_root WITH PASSWORD 'quakyNotes';
 ```
 ```
-postgres=# ALTER ROLE quaky_root SET client_encoding TO 'utf8';
-postgres=# ALTER ROLE quaky_root SET default_transaction_isolation TO 'read committed';
-postgres=# ALTER ROLE quaky_root SET timezone TO 'UTC';
+ALTER ROLE quaky_root SET client_encoding TO 'utf8';
+ALTER ROLE quaky_root SET default_transaction_isolation TO 'read committed';
+ALTER ROLE quaky_root SET timezone TO 'UTC';
 ```
 ```
 postgres=# GRANT ALL PRIVILEGES ON DATABASE quakynotes_db TO quaky_root;
